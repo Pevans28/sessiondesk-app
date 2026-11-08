@@ -21,7 +21,12 @@ module.exports = async function handler(req,res) {
       'subscription_data[metadata][user_id]':user.id,
       success_url:app+'/?billing=success',
       cancel_url:app+'/?billing=cancel',
-      allow_promotion_codes:'true'
+      allow_promotion_codes:'true',
+      // Stripe Tax will collect only where a tax registration and head office are configured.
+      // Require a billing location so tax can be calculated accurately.
+      'automatic_tax[enabled]':'true',
+      billing_address_collection:'required',
+      'tax_id_collection[enabled]':'true'
     };
     // Reuse the known customer to avoid duplicate billing portal accounts.
     if (account.stripe_customer_id) params.customer=account.stripe_customer_id;
