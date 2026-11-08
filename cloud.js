@@ -89,8 +89,6 @@
     return list[0];
   }
   async function activate() {
-    const account = await auth('user', {}).catch(()=>null); // Nonessential user probe; session verified by workspace RLS.
-    void account;
     const workspace=await getWorkspace();
     localBeforeCloud = window.sessiondeskBridge.read();
     revision=workspace.revision;
@@ -172,7 +170,7 @@
       const res=await fetch('/api/'+route,{method:'POST',
         headers:{Authorization:'Bearer '+session.access_token}});
       const data=await res.json();
-      if (!res.ok || !/^https:\/\/billing\.stripe\.com\/|^https:\/\/checkout\.stripe\.com\//.test(data.url||''))
+      if (!res.ok || !/^https:\/\/(billing|checkout)\.stripe\.com\//.test(data.url||''))
         throw new Error(data.error || 'Billing not available');
       window.location.assign(data.url);
     }catch(err){message(err.message);}
