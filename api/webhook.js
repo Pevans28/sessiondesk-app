@@ -43,7 +43,8 @@ async function applyCheckout(obj, created) {
     headers:{'Content-Type':'application/json','Prefer':'return=minimal'},
     body:JSON.stringify({stripe_customer_id:obj.customer, stripe_subscription_id:obj.subscription || null,updated_at:new Date().toISOString()})});
 }
-module.exports = async function handler(req,res) {
+module.exports.config = { api: { bodyParser: false } };
+module.exports = Object.assign(async function handler(req,res) {
   if (!method(req,res)) return;
   try {
     config(['STRIPE_WEBHOOK_SECRET','SUPABASE_SERVICE_ROLE_KEY']);
@@ -56,4 +57,4 @@ module.exports = async function handler(req,res) {
       await applySubscription(event.data.object,event.created);
     return res.status(200).json({received:true});
   } catch(error) {return fail(res,error);}
-};
+}, { config: { api: { bodyParser: false } } });
