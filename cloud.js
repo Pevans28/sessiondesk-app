@@ -25,7 +25,9 @@
   const clean = input => ({
     businessName: String(input?.businessName || '').slice(0,100),
     clients: Array.isArray(input?.clients) ? input.clients : [],
-    events: Array.isArray(input?.events) ? input.events : []
+    events: Array.isArray(input?.events) ? input.events : [],
+    appointments: Array.isArray(input?.appointments) ? input.appointments : [],
+    settings: input?.settings && typeof input.settings === 'object' ? input.settings : { industry:'Coaching / lessons', lowThreshold:2 }
   });
   const message = value => { UI.message.textContent = value; };
   const update = () => {
