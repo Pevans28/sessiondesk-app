@@ -60,3 +60,41 @@ SessionDesk is a lightweight client/package tracker for trainers, coaches, tutor
 - Production-grade account recovery, account deletion, privacy, terms and user support aren't implemented.
 - Cloud client data is a JSON document rather than a normalized relational model; add schema checks, payload limits, rigorous migrations, and per-client operations before scaling.
 - The SessionDesk name is provisional until trademark, domain and App Store availability are reviewed.
+
+
+## SessionDesk 2.0 interface (November 2026)
+
+A redesigned responsive dashboard is now available on this development branch and is **not merged to production**. It uses the same `sessiondesk_v1` browser storage key as the original version to retain existing local customer records.
+
+### Working local features
+
+- Mobile and desktop dashboard with four KPI cards, 7-day activity chart, recent activity, renewal watchlist, and upcoming appointments.
+- Client directory with search, active/archived/renewal filters, edit, archive and restore.
+- Manual package session logging, package renewals, and client payment records.
+- Calendar with create/edit/cancel appointments and a complete-and-deduct-one-session action.
+- Client detail modal, history, notes and copyable renewal-message text.
+- Settings for business name, industry and low-package threshold.
+- JSON backup/restore, client CSV export, offline-cached app shell, and installable PWA manifest.
+- Optional cloud mode preserves the new appointment and preferences fields.
+
+### Known limitations before commercial launch
+
+- Stripe subscriptions are a *code foundation*, not live payments. You must configure accounts, secure environment variables, SQL schema, billing webhooks and a Stripe sandbox first.
+- Payment entries do not charge clients; appointments do not send invitations; renewal copy does not send an SMS.
+- The PWA works as an installable **web app**, not as a published native iOS/Android app or App Store listing.
+- Local mode remains usable without paid access. Disable or redesign it before offering a fully enforced paid subscription.
+- The PWA caches app-shell assets for offline viewing. Test offline behavior and cache updates on actual iOS and Android devices.
+- Static checks are in `tests/smoke.cjs` and GitHub Actions; **these do not replace browser, payment, authentication and security testing**.
+- Privacy policy, terms of service, support contact, data deletion and branding/trademark review need owner approval before selling.
+
+### Owner's manual setup checklist
+
+1. Create a Supabase project, enable email auth/verification, run `sql/001_cloud_saas.sql` in a nonproduction project first.
+2. Create a Stripe subscription product, recurring price and webhook, starting with Stripe test mode.
+3. Set the environment variables listed earlier in Vercel (use separate preview/test and production credentials).
+4. Configure SMTP email delivery, account recovery, privacy policy, terms of service, support email and user data deletion.
+5. Test two separate customer accounts to verify database row isolation and browser-to-cloud import.
+6. Test subscription checkout, payment failures, cancellation, webhook signature checks and trial expiration.
+7. Test the interface on iPhone, Android, desktop and offline; check navigation, client/session edits, calendar, import/export and reinstall.
+8. Review the draft pull request, complete testing, then merge when ready. No manual copying of app code is required.
+
