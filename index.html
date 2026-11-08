@@ -1,162 +1,139 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#121b2b" />
-  <meta name="description" content="SessionDesk helps independent trainers, coaches, and tutors track client packages and sessions." />
-  <title>SessionDesk — Never lose track of a session.</title>
-  <style>
-    :root { color-scheme: light; --ink:#152136; --muted:#64748b; --line:#e6eaf0; --blue:#2563eb; --navy:#101e34; --bg:#f6f8fb; --white:#fff; --mint:#d9fae5; }
-    [hidden] { display: none !important; }
-    * { box-sizing:border-box } html { scroll-behavior:smooth } body { margin:0; font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--ink); background:var(--bg); }
-    button,input,select,textarea { font:inherit } button { cursor:pointer } button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible { outline:3px solid #a5c2ff; outline-offset:2px }
-    a { color:inherit } .shell { max-width:1180px; margin:0 auto; padding:0 24px }
-    .top { background:#111d32; color:#fff; } .nav { min-height:76px; display:flex; align-items:center; justify-content:space-between; gap:12px }
-    .brand { display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:-.7px; font-size:23px; }
-    .brandmark { display:grid; place-items:center; width:36px; height:36px; border-radius:11px; color:#0b2332; background:#baf5d0; font-size:21px; font-weight:950; }
-    .navright { display:flex; align-items:center; gap:12px } .tag { border:1px solid #45536b; padding:7px 11px; border-radius:30px; font-size:12px; color:#d5e2f7; }
-    .hero { display:grid; grid-template-columns:1fr auto; gap:20px; padding:37px 0 43px; align-items:end; }
-    .eyebrow { color:#a6f2c3; text-transform:uppercase; font-size:11px; font-weight:800; letter-spacing:2px; }
-    h1 { margin:12px 0 8px; font-size:clamp(29px,4vw,44px); letter-spacing:-1.7px; line-height:1.1; } .hero p { margin:0; color:#b5c4da; line-height:1.55; font-size:15px; max-width:610px }
-    .heroActions { display:flex; gap:10px; flex-wrap:wrap; align-items:center } .btn { display:inline-flex; justify-content:center; align-items:center; gap:7px; border-radius:11px; padding:11px 15px; border:1px solid transparent; background:#fff; color:#18243b; font-weight:750; font-size:13px; white-space:nowrap; }
-    .btn.primary { background:#bbf5ce; color:#103225 } .btn.dark { background:#1d2d48; border-color:#263855; color:white } .btn.outline { border-color:var(--line) } .btn.blue { color:#fff;background:#2663df } .btn.danger { color:#a22a37; background:#fff0f0; border-color:#ffd1d1 } .btn.tiny { padding:7px 10px; font-size:12px; border-radius:8px } .btn:hover { filter:brightness(.97) }
-    main { padding-top:29px; padding-bottom:54px } .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-    .kpi { background:#fff; border:1px solid var(--line); border-radius:17px; padding:22px; box-shadow:0 7px 22px #15213607; }
-    .kpi .small { display:flex; align-items:center; gap:7px; color:#677891; font-weight:650; font-size:12px; } .kpi strong { display:block; margin:14px 0 4px; font-size:32px; letter-spacing:-1.25px; } .kpi .foot { color:#8794a7; font-size:12px }
-    .kpi .icon { display:grid;place-items:center;border-radius:8px;width:24px;height:24px;background:#eef4ff;color:#2c69e9;font-weight:800 }
-    .sectionHead { margin:34px 0 16px; display:flex; justify-content:space-between; gap:12px; align-items:center; }
-    .sectionHead h2 { font-size:20px; letter-spacing:-.5px; margin:0 } .sectionHead p { margin:6px 0 0; color:#8490a1; font-size:13px }
-    .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:14px; }
-    .search { flex:1; min-width:170px; position:relative } .search input { width:100%; padding:13px 13px 13px 39px; border:1px solid var(--line);border-radius:12px;background:#fff; color:var(--ink) } .search span { position:absolute;left:14px;top:13px;color:#8995a8;pointer-events:none }
-    select { padding:12px 13px;border:1px solid var(--line); border-radius:12px; background:#fff;color:#344156 }
-    .clients { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; }
-    .client { background:#fff; border:1px solid var(--line); border-radius:17px; padding:19px; box-shadow:0 8px 23px #1c2d4507; min-width:0 }
-    .clientTop { display:flex; align-items:flex-start;gap:12px; } .avatar {flex:0 0 42px; height:42px; display:grid;place-items:center; background:#e6eeff;color:#2f5fc7;border-radius:12px;font-weight:900; }
-    .clientTitle { min-width:0;flex:1; } .clientTitle h3 { margin:0; font-size:15px; line-height:1.4; overflow-wrap:anywhere } .clientTitle p { margin:3px 0 0; font-size:12px; color:#8d9aab; overflow-wrap:anywhere }
-    .pill { background:#ebf8ef; color:#298051; border-radius:20px; font-size:10px; padding:5px 8px; font-weight:800; white-space:nowrap } .pill.warn { background:#fff3db;color:#ac670f } .pill.empty { background:#ffecec;color:#b8414d }
-    .clientStat { margin-top:19px; display:flex; justify-content:space-between; align-items:end;gap:8px; } .clientStat strong { font-size:31px; letter-spacing:-1px; line-height:1 } .clientStat small { color:#8190a4; font-size:12px } .statRight { text-align:right;color:#67758a;font-size:12px }
-    .progress { height:7px;background:#ecf0f5; border-radius:20px;overflow:hidden;margin:12px 0 17px } .progress div { background:#2864e3;height:100%;border-radius:20px; transition:width .2s } .progress div.warn { background:#edac45 } .progress div.empty { background:#e66a6f }
-    .cardActions {display:flex;flex-wrap:wrap;gap:8px; } .cardActions .btn { flex:1; } .more { margin:13px 0 0; padding-top:11px; border-top:1px solid #eff2f6; display:flex;justify-content:space-between;gap:8px;align-items:center; }
-    .more small { color:#8c9aaa;font-size:11px; } .linkbtn { background:none;border:0;color:#2d60c5;font-size:12px;font-weight:750;padding:7px 0 }
-    .emptyState { grid-column:1/-1; background:#fff;border:1px dashed #cbd5e1;border-radius:16px;text-align:center;padding:55px 24px; } .emptyState h3 { margin:5px 0 8px;letter-spacing:-.3px } .emptyState p { color:#7d8a9c;font-size:14px;margin:0 0 18px }
-    .bottom { display:grid; grid-template-columns:1.35fr 1fr; gap:16px; margin-top:30px; } .panel {background:#fff;border:1px solid var(--line); border-radius:17px;padding:22px;min-width:0} .panel h3 { margin:0 0 17px; font-size:16px } .activity { display:grid;gap:0;max-height:315px;overflow-y:auto } .logrow { display:flex;gap:12px;align-items:center; padding:12px 0; border-bottom:1px solid #eff2f6; font-size:13px; } .logrow:last-child { border:0 } .logDot {flex:0 0 30px;display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#eef5ff;color:#3872d9;font-weight:800} .logrow .sub {color:#8e9aab;font-size:11px;margin-top:4px} .logrow strong {font-size:13px} .logrow .desc { flex:1;min-width:0;overflow-wrap:anywhere }
-    .notice { padding:13px;border-radius:11px;background:#f1f5ff; color:#5a6b85;font-size:12px;line-height:1.65;margin-top:12px } .notice b {color:#263d63} .quick { display:flex; gap:9px;flex-wrap:wrap }
-    footer { background:#eef2f7;padding:22px 0;color:#7b8da4;font-size:12px; } footer .shell { display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap }
-    dialog {border:0;border-radius:19px;padding:0;width:min(540px,calc(100vw - 24px));max-height:calc(100vh - 26px);overflow-y:auto;box-shadow:0 30px 100px #07102155} dialog::backdrop {background:#101b3094;backdrop-filter:blur(2px)} .modalHead {padding:23px 24px 14px;display:flex;justify-content:space-between;align-items:start;gap:16px;border-bottom:1px solid #edf1f5;} .modalHead h2 {margin:0;font-size:21px;letter-spacing:-.6px} .modalHead p {margin:7px 0 0;color:#8591a3;font-size:13px} .x {background:#eff2f6;border:0;border-radius:9px;width:32px;height:32px;font-size:23px;line-height:1;color:#64748b}
-    .modalBody {padding:21px 24px 25px} .fields {display:grid;grid-template-columns:1fr 1fr;gap:15px} .field {display:flex;flex-direction:column;gap:7px;min-width:0} .field.full {grid-column:1/-1}.field label {font-size:12px;font-weight:750;color:#51627b}.field input,.field textarea,.field select {border:1px solid #dfe5ec;border-radius:10px;padding:12px;width:100%;background:#fff;color:#152136} .field textarea {min-height:75px;resize:vertical}.field .hint {color:#8995a7;font-size:11px} .modalActions {margin-top:20px;display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap} .muted { color:#8491a5;font-size:12px;line-height:1.55 }
-    .toast {position:fixed;z-index:300;bottom:22px;left:50%;transform:translateX(-50%) translateY(30px);padding:12px 18px;background:#182943;color:#fff;font-size:13px;border-radius:11px;box-shadow:0 10px 40px #10233f44;opacity:0;pointer-events:none;transition:all .2s;max-width:92vw;text-align:center}.toast.show {opacity:1;transform:translateX(-50%) translateY(0)}
-    @media(max-width:950px) { .clients{grid-template-columns:repeat(2,minmax(0,1fr))}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))} .hero {grid-template-columns:1fr} .bottom{grid-template-columns:1fr} }
-    @media(max-width:620px) { .shell{padding:0 15px}.nav{min-height:65px}.brand{font-size:20px}.brandmark{width:32px;height:32px}.tag {display:none}.hero{padding:24px 0 30px}.heroActions{width:100%}.heroActions button{flex:1}.kpis{gap:9px}.kpi{padding:16px}.kpi strong{font-size:27px}.clients{grid-template-columns:1fr}.sectionHead{align-items:start}.sectionHead .btn{align-self:end}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.modalHead,.modalBody{padding-left:18px;padding-right:18px}.panel{padding:17px}.cardActions .btn{min-width:110px} }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101b2b">
+  <meta name="color-scheme" content="light">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="SessionDesk">
+  <meta name="description" content="Keep client sessions, packages, appointments and recorded payments organized in one beautiful workspace.">
+  <title>SessionDesk — Your client business, organized</title>
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/assets/app.css">
 </head>
 <body>
-  <header class="top">
-    <div class="shell">
-      <div class="nav">
-        <div class="brand"><div class="brandmark">S</div> SessionDesk</div>
-        <div class="navright"><span class="tag">Built for independent professionals</span><button class="btn dark tiny" id="settingsBtn">⚙ Settings</button></div>
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="i-dashboard" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="8" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="15" width="7" height="6" rx="1.5"/></g></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-4.5 3-6.8 6.5-6.8s6.5 2.3 6.5 6.8M17 5.5a3 3 0 0 1 0 5.8M18.5 14c2 .7 3 2.5 3 5"/></g></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 2v6M17 2v6M3 10h18"/></g></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></g></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="2.5"/><path d="M3 9h18M16 15h2"/></g></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="m4 9-1 3 1 3 2.5.5 1 2.5 3 1 1.5-2 2.5 0 1.5 2 3-1 1-2.5 2.5-.5 1-3-1-3-2.5-.5-1-2.5-3-1-1.5 2h-2.5l-1.5-2-3 1-1 2.5z" transform="translate(-.5,-.5) scale(1.04)"/></g></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></g></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 19h11a4 4 0 0 0 0-8c-.7-7.6-12.7-8-13 0A4 4 0 0 0 7 19z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h16m-6-6 6 6-6 6"/></g></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></g></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.5 2 18a2 2 0 0 0 1.8 3h16.4a2 2 0 0 0 1.8-3L14 3.5a2 2 0 0 0-4 0z"/><path d="M12 9v5m0 3v.1"/></g></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 7 9-7"/></g></symbol>
+    <symbol id="i-package" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5zm-9 5v10l9 5 9-5V7M12 12v10M7.5 4.5l9 5"/></g></symbol>
+  </svg>
+
+  <div class="layout">
+    <div id="mobileShade" class="mobile-shade"></div>
+    <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
+      <a class="logo" href="/" aria-label="SessionDesk home"><span class="logo-mark">S</span><span>SessionDesk</span></a>
+      <span class="nav-label">Workspace</span>
+      <nav>
+        <button class="nav-link active" data-view="overview" type="button"><svg><use href="#i-dashboard"/></svg> Overview</button>
+        <button class="nav-link" data-view="clients" type="button"><svg><use href="#i-users"/></svg> Clients <span class="count" id="navClients">0</span></button>
+        <button class="nav-link" data-view="calendar" type="button"><svg><use href="#i-calendar"/></svg> Calendar</button>
+        <button class="nav-link" data-view="activity" type="button"><svg><use href="#i-activity"/></svg> Session history</button>
+        <button class="nav-link" data-view="payments" type="button"><svg><use href="#i-wallet"/></svg> Payments</button>
+      </nav>
+      <span class="nav-label" style="margin-top:30px">Preferences</span>
+      <nav><button class="nav-link" data-view="settings" type="button"><svg><use href="#i-settings"/></svg> Settings</button></nav>
+      <div class="side-bottom">
+        <section class="side-card"><span class="tiny-label">Stay organized</span><strong>More coaching. Less admin.</strong><p>Keep every package, session and renewal in one simple place.</p><button id="sidebarNew" type="button" data-action="new-client">＋ Add a client</button></section>
+        <div class="side-footer">SessionDesk <span id="appVersion">2.0</span> · Made for independents</div>
       </div>
-      <div class="hero">
-        <div><div class="eyebrow">Simple client management</div><h1>Never lose track of a session.</h1><p>Know exactly who's paid, who's running low, and who needs another package. Less admin, more coaching.</p></div>
-        <div class="heroActions"><button class="btn dark" id="demoBtn">See demo</button><button class="btn primary" id="newClientBtn">＋ Add client</button></div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="breadcrumb"><button type="button" id="menuToggle" class="menu-button" aria-label="Open menu"><svg width="19" height="19"><use href="#i-menu"/></svg></button><span id="breadcrumb">Overview</span></div>
+        <div class="top-actions">
+          <span class="privacy-dot" id="cloudState">Local mode</span>
+          <button class="btn mint" type="button" data-action="new-client"><svg><use href="#i-plus"/></svg> Add client</button>
+          <button class="user-button" id="accountBtn" type="button" aria-label="Account and cloud backup" title="Account and cloud backup"><svg width="19" height="19"><use href="#i-cloud"/></svg></button>
+        </div>
+      </header>
+      <main class="main" id="appMain" tabindex="-1"><div class="empty">Loading your workspace…</div></main>
+    </div>
+  </div>
+
+  <dialog id="clientDialog" class="dialog">
+    <div class="modal-header"><div><h2 id="clientDialogTitle">Add a client</h2><p>Keep their package and contact info organized.</p></div><button type="button" class="modal-close" data-close="clientDialog" aria-label="Close">×</button></div>
+    <form id="clientForm" class="modal-body">
+      <input name="id" type="hidden">
+      <div class="form-grid">
+        <div class="field full"><label for="cName">Client name *</label><input class="input" id="cName" name="name" required maxlength="90" placeholder="e.g. Jordan Smith" autocomplete="off"></div>
+        <div class="field"><label for="cService">Service</label><input class="input" id="cService" name="service" maxlength="80" placeholder="e.g. Hitting lessons"></div>
+        <div class="field"><label for="cContact">Email or phone</label><input class="input" id="cContact" name="contact" maxlength="120" placeholder="Optional"></div>
+        <div class="field"><label for="cTotal">Sessions in package *</label><input class="input" id="cTotal" name="total" type="number" min="1" max="10000" step="1" required value="4"></div>
+        <div class="field"><label for="cPrice">Package price (USD)</label><input class="input" id="cPrice" name="price" type="number" min="0" max="10000000" step=".01" required value="0"></div>
+        <div class="field full"><label for="cNotes">Private coaching notes</label><textarea id="cNotes" name="notes" maxlength="2000" placeholder="Optional notes. Avoid sensitive health or financial details."></textarea></div>
       </div>
+      <div class="modal-actions"><button class="btn" type="button" data-close="clientDialog">Cancel</button><button class="btn blue" type="submit">Save client</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="actionDialog" class="dialog">
+    <div class="modal-header"><div><h2 id="actionTitle">Log a session</h2><p id="actionSubtitle">Record your client's activity.</p></div><button type="button" class="modal-close" data-close="actionDialog" aria-label="Close">×</button></div>
+    <form id="actionForm" class="modal-body">
+      <input type="hidden" name="action" value="session">
+      <div class="form-grid">
+        <div class="field full"><label for="actionClient">Client *</label><select id="actionClient" name="id" required></select></div>
+        <div class="field full" id="actionCountField"><label for="actionCount" id="actionCountLabel">Number of sessions *</label><input class="input" id="actionCount" name="count" type="number" min="1" max="10000" step="1" value="1" required></div>
+        <div class="field full" id="actionPaymentField" hidden><label for="actionAmount">Payment amount (USD) *</label><input class="input" id="actionAmount" name="amount" type="number" min=".01" max="10000000" step=".01" value="100"></div>
+        <div class="field full"><label for="actionNote">Note (optional)</label><textarea id="actionNote" name="note" maxlength="300" placeholder="Anything to remember?"></textarea></div>
+      </div>
+      <div class="modal-actions"><button class="btn" type="button" data-close="actionDialog">Cancel</button><button class="btn blue" type="submit">Save record</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="appointmentDialog" class="dialog">
+    <div class="modal-header"><div><h2 id="appointmentTitle">Schedule a session</h2><p>Track upcoming appointments on your calendar.</p></div><button type="button" class="modal-close" data-close="appointmentDialog" aria-label="Close">×</button></div>
+    <form id="appointmentForm" class="modal-body">
+      <input type="hidden" name="id">
+      <div class="form-grid">
+        <div class="field full"><label for="apptClient">Client *</label><select id="apptClient" name="clientId" required></select></div>
+        <div class="field"><label for="apptDate">Date *</label><input class="input" id="apptDate" name="date" type="date" required></div>
+        <div class="field"><label for="apptTime">Start time *</label><input class="input" id="apptTime" name="time" type="time" required value="09:00"></div>
+        <div class="field"><label for="apptDuration">Duration (minutes) *</label><input class="input" id="apptDuration" name="duration" type="number" min="15" max="480" step="15" value="60" required></div>
+        <div class="field full"><label for="apptNotes">Notes</label><textarea id="apptNotes" name="notes" maxlength="300" placeholder="Location or details"></textarea></div>
+      </div>
+      <div class="modal-actions"><button class="btn" type="button" data-close="appointmentDialog">Cancel</button><button class="btn blue" type="submit">Save appointment</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="detailDialog" class="dialog wide"><div class="modal-header"><div><h2>Client details</h2><p>Package balance, activity and quick actions.</p></div><button type="button" class="modal-close" data-close="detailDialog" aria-label="Close">×</button></div><div class="modal-body" id="detailContent"></div></dialog>
+  <dialog id="accountDialog" class="dialog">
+    <div class="modal-header"><div><h2>Account & cloud sync</h2><p>Access your records on more than one device.</p></div><button type="button" class="modal-close" data-close="accountDialog" aria-label="Close">×</button></div>
+    <div class="modal-body">
+      <p class="accountHelper">The free local workspace saves on this device. Cloud accounts and subscription billing become available after the owner configures the secure database and Stripe integrations. Your browser records will never upload automatically.</p>
+      <form id="accountForm">
+        <div class="field"><label for="accountEmail">Email address</label><input class="input" id="accountEmail" type="email" required autocomplete="email" maxlength="254"></div>
+        <div class="field" style="margin-top:12px"><label for="accountPassword">Password</label><input class="input" id="accountPassword" type="password" required minlength="8" autocomplete="current-password"></div>
+        <div class="accountButtons"><button class="btn blue" type="submit">Sign in</button><button class="btn" id="accountSignup" type="button">Create account</button></div>
+      </form>
+      <div id="accountDetails" hidden>
+        <div class="accountButtons"><button class="btn" id="accountImport" type="button">Import local records</button><button class="btn" id="accountReload" type="button">Reload cloud</button></div>
+        <div class="accountButtons"><button class="btn blue" id="accountCheckout" type="button">Upgrade</button><button class="btn" id="accountPortal" type="button">Manage billing</button></div>
+        <div class="accountButtons"><button class="btn" id="accountSignout" type="button">Sign out</button></div>
+      </div>
+      <p id="accountMessage" aria-live="polite" role="status">Checking cloud availability…</p>
     </div>
-  </header>
-  <main class="shell">
-    <div class="kpis">
-      <article class="kpi"><div class="small"><span class="icon">▣</span> Active clients</div><strong id="kClients">0</strong><div class="foot">Your current roster</div></article>
-      <article class="kpi"><div class="small"><span class="icon">↗</span> Sessions left</div><strong id="kRemaining">0</strong><div class="foot">Across active packages</div></article>
-      <article class="kpi"><div class="small"><span class="icon">!</span> Need renewal</div><strong id="kRenewals">0</strong><div class="foot">2 sessions remaining or fewer</div></article>
-      <article class="kpi"><div class="small"><span class="icon">✓</span> Completed this week</div><strong id="kWeek">0</strong><div class="foot">Sessions logged since Monday</div></article>
-    </div>
-    <section>
-      <div class="sectionHead"><div><h2>Your clients</h2><p>Packages and session balances in one place.</p></div><button class="btn blue tiny" id="addClientSecondary">＋ New client</button></div>
-      <div class="toolbar"><div class="search"><span>⌕</span><input id="search" type="search" placeholder="Search clients or services…" aria-label="Search clients" /></div><select id="filter" aria-label="Filter clients"><option value="all">All clients</option><option value="low">Need renewal</option><option value="active">Active packages</option><option value="archived">Archived</option></select></div>
-      <div id="clientGrid" class="clients"></div>
-    </section>
-    <div class="bottom">
-      <section class="panel"><h3>Recent activity</h3><div id="activity" class="activity"></div></section>
-      <section class="panel"><h3>Own your client records</h3><p class="muted">Export a backup whenever you like. This starter app stores records <b>only in this browser on this device</b> — not in a company database.</p><div class="quick"><button class="btn outline tiny" id="exportBtn">↓ Download backup</button><button class="btn outline tiny" id="csvBtn">↓ Client CSV</button><button class="btn outline tiny" id="importBtn">↑ Restore backup</button><input type="file" id="importFile" accept="application/json,.json" hidden /></div><div class="notice"><b>Before selling subscriptions:</b> Add customer login, encrypted cloud storage, billing, and privacy/terms pages. This single-file version is a complete local-use MVP, not yet a multi-user SaaS.</div></section>
-    </div>
-  </main>
-  <footer><div class="shell"><span>SessionDesk · Independent starter app · Version 1.0</span><span>Data stays in this browser. Back up regularly.</span></div></footer>
-  <dialog id="clientDialog"><div class="modalHead"><div><h2 id="clientDialogTitle">Add a client</h2><p>Track a prepaid package and its remaining sessions.</p></div><button class="x" type="button" data-close="clientDialog" aria-label="Close">×</button></div><form id="clientForm" class="modalBody"><input type="hidden" name="id" /><div class="fields"><div class="field full"><label for="fName">Client name *</label><input id="fName" name="name" maxlength="90" required placeholder="e.g. Jordan Smith" /></div><div class="field"><label for="fService">Service</label><input id="fService" name="service" maxlength="80" placeholder="e.g. Hitting lessons" /></div><div class="field"><label for="fContact">Email or phone</label><input id="fContact" name="contact" maxlength="120" placeholder="Optional" /></div><div class="field"><label for="fSessions">Sessions in package *</label><input id="fSessions" name="total" type="number" min="1" max="10000" step="1" required value="4" /></div><div class="field"><label for="fPrice">Package price (USD)</label><input id="fPrice" name="price" type="number" min="0" max="10000000" step="0.01" value="0" /></div><div class="field full"><label for="fNotes">Internal notes</label><textarea id="fNotes" name="notes" maxlength="2000" placeholder="Goals, package details, etc."></textarea></div></div><div class="modalActions"><button class="btn outline" type="button" data-close="clientDialog">Cancel</button><button class="btn blue" type="submit">Save client</button></div></form></dialog>
-  <dialog id="actionDialog"><div class="modalHead"><div><h2 id="actionTitle">Log session</h2><p id="actionSub">Update this client's package.</p></div><button class="x" type="button" data-close="actionDialog" aria-label="Close">×</button></div><form class="modalBody" id="actionForm"><input type="hidden" name="id" /><input type="hidden" name="action" /><div class="fields"><div class="field full" id="countField"><label for="aCount" id="countLabel">Number of sessions</label><input id="aCount" name="count" type="number" min="1" max="10000" step="1" value="1" required /></div><div class="field full" id="paymentField" hidden><label for="aPayment">Payment collected (USD)</label><input id="aPayment" name="payment" type="number" min="0" max="10000000" step="0.01" value="0" /></div><div class="field full"><label for="aNote">Optional note</label><textarea name="note" id="aNote" maxlength="300" placeholder="What happened?" ></textarea></div></div><div class="modalActions"><button class="btn outline" type="button" data-close="actionDialog">Cancel</button><button class="btn blue" type="submit" id="actionSubmit">Save</button></div></form></dialog>
-  <dialog id="settingsDialog"><div class="modalHead"><div><h2>Business settings</h2><p>Add the name you want in your exports and reminders.</p></div><button class="x" type="button" data-close="settingsDialog" aria-label="Close">×</button></div><form class="modalBody" id="settingsForm"><div class="field"><label for="businessName">Business name</label><input id="businessName" name="businessName" maxlength="100" placeholder="e.g. My Training Studio" /></div><div class="modalActions"><button class="btn outline" type="button" data-close="settingsDialog">Cancel</button><button class="btn blue" type="submit">Save settings</button></div></form></dialog>
-  <dialog id="historyDialog"><div class="modalHead"><div><h2 id="historyTitle">Client history</h2><p>Package transactions and activity.</p></div><button class="x" type="button" data-close="historyDialog" aria-label="Close">×</button></div><div class="modalBody"><div id="historyInfo" class="muted"></div><div id="historyList" class="activity" style="margin:15px 0"></div><div class="quick" id="historyActions"></div></div></dialog>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script>
-    (() => { 'use strict';
-      const STORE = 'sessiondesk_v1';
-      const $ = id => document.getElementById(id);
-      const escapeHTML = val => String(val ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-      const idgen = () => (globalThis.crypto && crypto.randomUUID ? crypto.randomUUID() : 'id-'+Date.now()+'-'+Math.random().toString(36).slice(2));
-      const today = () => new Date().toISOString();
-      let db = { businessName:'', clients:[], events:[] };
-      try { const prior = JSON.parse(localStorage.getItem(STORE)); if(prior && Array.isArray(prior.clients) && Array.isArray(prior.events)) db = prior; } catch(e) { console.warn('Unable to read existing data', e); }
-      function save() { try { localStorage.setItem(STORE, JSON.stringify(db)); return true; } catch(e) { notify('Storage unavailable or full. Export a backup.'); console.error(e); return false; } }
-      function notify(message) { const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(notify.t);notify.t=setTimeout(()=>el.classList.remove('show'),3200); }
-      const remaining = c => Math.max(0, Number(c.total||0)-Number(c.used||0));
-      const label = c => c.archived ? 'Archived' : remaining(c)===0 ? 'Renew now' : remaining(c)<=2 ? 'Running low' : 'Active';
-      function mondayStart() { const now = new Date();const d=now.getDay();now.setHours(0,0,0,0);now.setDate(now.getDate()-((d+6)%7)); return now; }
-      function addEvent(type, c, detail, amount) {db.events.unshift({id:idgen(),clientId:c.id, clientName:c.name, type, detail:detail||'', amount:Number(amount)||0, when:today()}); if(db.events.length>2000) db.events.length=2000;}
-      function fmtDate(s) { const d=new Date(s);return isNaN(d)?'—':d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}); }
-      function fmtMoney(n) {return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(n)||0)}
-      function initials(name) { return (name||'?').split(/\s+/).slice(0,2).map(s=>s[0]||'').join('').toUpperCase() }
-      function render() {
-        const active=db.clients.filter(c=>!c.archived), rem=active.reduce((n,c)=>n+remaining(c),0), low=active.filter(c=>remaining(c)<=2).length, weekStart=mondayStart();
-        $('kClients').textContent=active.length; $('kRemaining').textContent=rem;$('kRenewals').textContent=low;
-        $('kWeek').textContent=db.events.filter(e=>e.type==='session'&&new Date(e.when)>=weekStart).reduce((sum,e)=>sum+Number(e.amount||1),0);
-        const q=$('search').value.trim().toLowerCase(), filter=$('filter').value;
-        const list=db.clients.filter(c=>[c.name,c.service,c.contact].some(v=>String(v||'').toLowerCase().includes(q)))
-          .filter(c=> filter==='archived'?c.archived : filter==='active'?!c.archived&&remaining(c)>2 :filter==='low'?!c.archived&&remaining(c)<=2 : !c.archived)
-          .sort((a,b)=>remaining(a)-remaining(b)||a.name.localeCompare(b.name));
-        $('clientGrid').innerHTML=list.length ? list.map(c=>{
-          const left=remaining(c),total=Math.max(1,Number(c.total)||1), pct=Math.max(0,Math.min(100,left/total*100)),status=label(c),statClass=c.archived?'':left===0?'empty':left<=2?'warn':'';
-          const phone = (c.contact||'').replace(/[^\d+]/g,'');
-          return `<article class="client"><div class="clientTop"><div class="avatar">${escapeHTML(initials(c.name))}</div><div class="clientTitle"><h3>${escapeHTML(c.name)}</h3><p>${escapeHTML(c.service||'General sessions')}</p></div><span class="pill ${statClass}">${escapeHTML(status)}</span></div>
-          <div class="clientStat"><div><strong>${left}</strong> <small>/ ${total} sessions left</small></div><div class="statRight">${fmtMoney(c.price)}<br>package value</div></div><div class="progress"><div style="width:${pct}%" class="${statClass}"></div></div>
-          <div class="cardActions"><button class="btn blue tiny" data-action="session" data-id="${c.id}" ${c.archived||left===0?'disabled':''}>✓ Log session</button><button class="btn outline tiny" data-action="renew" data-id="${c.id}" ${c.archived?'disabled':''}>＋ Add sessions</button></div>
-          <div class="more"><small>${escapeHTML(c.contact||'No contact added')}</small><button class="linkbtn" data-action="history" data-id="${c.id}">Details →</button></div></article>`;
-        }).join('') : `<div class="emptyState"><div style="font-size:38px">▧</div><h3>${q||filter!=='all'?'No matching clients':'Your client list starts here'}</h3><p>${q||filter!=='all'?'Try a different search or filter.':'Add your first client package and start tracking sessions.'}</p><button class="btn blue" id="emptyAdd">＋ Add client</button></div>`;
-        const emptyAdd=$('emptyAdd');if(emptyAdd)emptyAdd.addEventListener('click',()=>openClient());
-        $('activity').innerHTML=db.events.length?db.events.slice(0,12).map(e=>`<div class="logrow"><div class="logDot">${e.type==='session'?'✓':e.type==='renew'?'＋':e.type==='paid'?'$':'•'}</div><div class="desc"><strong>${escapeHTML(e.clientName)}</strong><div class="sub">${escapeHTML(eventText(e))}${e.detail?' · '+escapeHTML(e.detail):''}</div></div><div class="sub">${fmtDate(e.when)}</div></div>`).join(''):'<p class="muted">Your recent sessions and renewals will appear here.</p>';
-      }
-      function eventText(e) {return e.type==='session'?`${e.amount} session${e.amount===1?'':'s'} logged`:e.type==='renew'?`${e.amount} sessions added`:e.type==='paid'?`${fmtMoney(e.amount)} collected`:e.type==='create'?'Client added':e.type==='archive'?'Client archived':e.type==='unarchive'?'Client restored':'Client updated'}
-      function openClient(id) {const c=db.clients.find(c=>c.id===id); $('clientDialogTitle').textContent=c?'Edit client':'Add a client';const f=$('clientForm');f.reset();f.elements.id.value=c?.id||'';f.elements.name.value=c?.name||'';f.elements.service.value=c?.service||'';f.elements.contact.value=c?.contact||'';f.elements.total.value=c?.total||4;f.elements.price.value=c?.price??0;f.elements.notes.value=c?.notes||'';$('clientDialog').showModal();setTimeout(()=>$('fName').focus(),50)}
-      $('clientForm').addEventListener('submit',ev=>{ev.preventDefault();const f=ev.currentTarget;const id=f.elements.id.value;const name=f.elements.name.value.trim();const total=Number(f.elements.total.value);const price=Number(f.elements.price.value);if(!name||!Number.isInteger(total)||total<1||total>10000||!Number.isFinite(price)||price<0){notify('Check the name, sessions and price.');return}
-        const prior=db.clients.find(c=>c.id===id);
-        if(prior) {if(total<Number(prior.used||0)){notify(`Cannot set a package below ${prior.used} already-used sessions.`);return}Object.assign(prior,{name,service:f.elements.service.value.trim(),contact:f.elements.contact.value.trim(),total,price,notes:f.elements.notes.value.trim()});addEvent('edit',prior);} else {const c={id:idgen(),name,service:f.elements.service.value.trim(),contact:f.elements.contact.value.trim(),total,used:0,price,notes:f.elements.notes.value.trim(),archived:false,createdAt:today()};db.clients.push(c);addEvent('create',c);}save();render();$('clientDialog').close();notify(prior?'Client updated':'Client added');
-      });
-      function openAction(id,action){const c=db.clients.find(c=>c.id===id);if(!c)return;$('actionForm').reset();$('actionForm').elements.id.value=id;$('actionForm').elements.action.value=action;$('actionTitle').textContent=action==='session'?'Log completed session':action==='renew'?'Add package sessions':'Record payment';$('actionSub').textContent=c.name+' · '+remaining(c)+' session(s) remaining';$('countField').hidden=action==='paid';$('paymentField').hidden=action!=='paid';$('aCount').required=action!=='paid';$('aPayment').required=action==='paid';$('countLabel').textContent=action==='session'?'Sessions completed':'Sessions to add';$('actionSubmit').textContent=action==='session'?'Log session':action==='renew'?'Add sessions':'Save payment';$('actionDialog').showModal();}
-      $('actionForm').addEventListener('submit',ev=>{ev.preventDefault();const f=ev.currentTarget,c=db.clients.find(c=>c.id===f.elements.id.value),action=f.elements.action.value; if(!c)return;let count=Number(f.elements.count.value);let amount=Number(f.elements.payment.value);if(action!=='paid'&&(!Number.isInteger(count)||count<1||count>10000)){notify('Enter a valid number of sessions.');return}if(action==='session'&&count>remaining(c)){notify('Not enough sessions left. Renew this package first.');return}if(action==='paid'&&(!Number.isFinite(amount)||amount<0||amount>10000000)){notify('Enter a valid payment amount.');return}
-        if(action==='session')c.used=Number(c.used||0)+count;
-        if(action==='renew')c.total=Number(c.total||0)+count;
-        if(action==='paid')c.collected=Number(c.collected||0)+amount;
-        addEvent(action==='paid'?'paid':action,c,f.elements.note.value.trim(),action==='paid'?amount:count);save();render();$('actionDialog').close();notify(action==='session'?'Session logged':action==='renew'?'Sessions added':'Payment recorded');
-      });
-      function showHistory(id){const c=db.clients.find(c=>c.id===id);if(!c)return;$('historyTitle').textContent=c.name;$('historyInfo').innerHTML=`<b>${escapeHTML(c.service||'General sessions')}</b><br>${escapeHTML(c.contact||'No contact')}<br>Sessions: ${remaining(c)} left of ${c.total} · Package price: ${fmtMoney(c.price)}<br>Payments recorded: ${fmtMoney(c.collected||0)}${c.notes?'<br>Notes: '+escapeHTML(c.notes).replace(/\n/g,'<br>'):''}`;
-        const events=db.events.filter(e=>e.clientId===id);$('historyList').innerHTML=events.length?events.map(e=>`<div class="logrow"><div class="logDot">•</div><div class="desc">${escapeHTML(eventText(e))}${e.detail?'<div class="sub">'+escapeHTML(e.detail)+'</div>':''}</div><div class="sub">${fmtDate(e.when)}</div></div>`).join(''):'<p class="muted">No activity.</p>';
-        $('historyActions').innerHTML=`<button class="btn outline tiny" data-action="edit" data-id="${c.id}">Edit</button><button class="btn outline tiny" data-action="paid" data-id="${c.id}" ${c.archived?'disabled':''}>Record payment</button><button class="btn outline tiny" data-action="reminder" data-id="${c.id}">Copy renewal text</button><button class="btn ${c.archived?'outline':'danger'} tiny" data-action="archive" data-id="${c.id}">${c.archived?'Restore':'Archive'}</button>`;
-        $('historyDialog').showModal();
-      }
-      function delegated(e){const btn=e.target.closest('[data-action]');if(!btn)return;const id=btn.dataset.id, action=btn.dataset.action,c=db.clients.find(c=>c.id===id);if(!c)return;
-        if(action==='history'){showHistory(id);return}if(action==='session'||action==='renew'||action==='paid'){$('historyDialog').close();openAction(id,action);return}if(action==='edit'){$('historyDialog').close();openClient(id);return}if(action==='archive'){if(!c.archived&&!confirm(`Archive ${c.name}? Their history will be preserved.`))return;c.archived=!c.archived;addEvent(c.archived?'archive':'unarchive',c);save();render();$('historyDialog').close();notify(c.archived?'Client archived':'Client restored');return}
-        if(action==='reminder'){const msg=`Hi ${c.name.split(' ')[0]}, quick update from ${db.businessName||'your coach'}: you have ${remaining(c)} session(s) remaining in your package. Would you like to book another package?`;copyText(msg);}
-      }
-      async function copyText(t){try {await navigator.clipboard.writeText(t);notify('Renewal message copied');}catch(e){const a=document.createElement('textarea');a.value=t;document.body.append(a);a.select();try{document.execCommand('copy');notify('Renewal message copied')}catch(e2){notify('Copy not available in this browser')}a.remove();}}
-      document.addEventListener('click',e=>{const x=e.target.closest('[data-close]');if(x){$(x.dataset.close)?.close();return}delegated(e)});
-      $('newClientBtn').addEventListener('click',()=>openClient());$('addClientSecondary').addEventListener('click',()=>openClient());$('search').addEventListener('input',render);$('filter').addEventListener('change',render);
-      $('settingsBtn').addEventListener('click',()=>{$('businessName').value=db.businessName||'';$('settingsDialog').showModal()});$('settingsForm').addEventListener('submit',e=>{e.preventDefault();db.businessName=$('businessName').value.trim();save();$('settingsDialog').close();notify('Business settings saved')});
-      function download(name,body,mime){const blob=new Blob([body],{type:mime}), url=URL.createObjectURL(blob), a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),15000)}
-      $('exportBtn').addEventListener('click',()=>download('sessiondesk-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({version:1,exportedAt:today(),...db},null,2),'application/json'));
-      function csvCell(x){return '"'+String(x??'').replace(/"/g,'""')+'"'};
-      $('csvBtn').addEventListener('click',()=>{let rows=[['Name','Service','Contact','Sessions Total','Sessions Used','Sessions Left','Package Price USD','Payments Recorded USD','Archived','Notes']];for(const c of db.clients)rows.push([c.name,c.service,c.contact,c.total,c.used,remaining(c),c.price,c.collected||0,c.archived?'Yes':'No',c.notes]);const csv='\ufeff'+rows.map(row=>row.map(csvCell).join(',')).join('\r\n');download('sessiondesk-clients.csv',csv,'text/csv;charset=utf-8');});
-      $('importBtn').addEventListener('click',()=>$('importFile').click());$('importFile').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{if(file.size>10*1024*1024)throw new Error('Backup too large');const data=JSON.parse(await file.text());if(!Array.isArray(data.clients)||!Array.isArray(data.events)||data.clients.length>20000||data.events.length>100000)throw new Error('Invalid backup');if(!confirm(`Restore ${data.clients.length} clients? This replaces the records on this device. Export a backup first if needed.`))return;db={businessName:String(data.businessName||'').slice(0,100), clients:data.clients.filter(c=>c&&typeof c.id==='string'&&typeof c.name==='string'), events:data.events.filter(x=>x&&typeof x.clientId==='string'&&typeof x.type==='string')};save();render();notify('Backup restored');}catch(err){alert('Could not restore backup: '+err.message)}finally{e.target.value=''}});
-      $('demoBtn').addEventListener('click',()=>{if(db.clients.length&&!confirm('Add 3 demo clients to your existing records?'))return;const examples=[['Alex Rivera','Personal training','alex@example.com',8,3,520],['Taylor Lee','Pilates sessions','taylor@example.com',4,3,240],['Jordan Park','Baseball lessons','jordan@example.com',6,6,480]];for(const [name,service,contact,total,used,price] of examples){const c={id:idgen(),name,service,contact,total,used,price,notes:'Demo record — you can archive this client.',archived:false,createdAt:today()};db.clients.push(c);addEvent('create',c);if(used)addEvent('session',c,'Demo activity',used);}save();render();notify('Demo clients added');});
-      render();
-    })();
-  </script>
+  </dialog>
+  <input type="file" id="importFile" accept=".json,application/json" hidden>
+  <div class="floating-toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/assets/app.js" defer></script>
+  <script src="/cloud.js" defer></script>
 </body>
 </html>
